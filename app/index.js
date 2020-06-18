@@ -37,6 +37,7 @@ ${w}${c}${c}${w}${w}${c}${w}${c}${w}${c}${w}${w}${w}${c}${w}${c}${w}${w}${c}${w}
 
   const response = {
     response_type: "in_channel",
+    as_user: true,
     text: responseText,
   };
 
