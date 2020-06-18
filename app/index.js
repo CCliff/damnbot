@@ -18,7 +18,11 @@ app.use(bodyParser.json())
 
 app.post('/', (req, res) => {
   console.log(JSON.stringify(req.body));
-  response = `:turbodaaamn:`;
+  const replacement = req.body.text;
+  response = `${replacement}:turbodaaamn::turbodaaamn:${replacement}${replacement}${replacement}:turbodaaamn:${replacement}${replacement}${replacement}:turbodaaamn::turbodaaamn::turbodaaamn:${replacement}${replacement}:turbodaaamn:${replacement}${replacement}:turbodaaamn:${replacement}
+${replacement}:turbodaaamn:${replacement}:turbodaaamn:${replacement}:turbodaaamn:${replacement}:turbodaaamn:${replacement}:turbodaaamn:${replacement}:turbodaaamn:${replacement}:turbodaaamn:${replacement}:turbodaaamn::turbodaaamn:${replacement}:turbodaaamn:${replacement}
+${replacement}:turbodaaamn:${replacement}:turbodaaamn:${replacement}:turbodaaamn::turbodaaamn::turbodaaamn:${replacement}:turbodaaamn:${replacement}:turbodaaamn:${replacement}:turbodaaamn:${replacement}:turbodaaamn:${replacement}:turbodaaamn::turbodaaamn:${replacement}
+${replacement}:turbodaaamn::turbodaaamn:${replacement}${replacement}:turbodaaamn:${replacement}:turbodaaamn:${replacement}:turbodaaamn:${replacement}${replacement}${replacement}:turbodaaamn:${replacement}:turbodaaamn:${replacement}${replacement}:turbodaaamn:${replacement}`;
   res.send(response);
 });
 
