@@ -11,12 +11,14 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 app.post('/', (req, res) => {
-  const replacement = req.body.text;
+  const items = req.body.text.match(/(:.+?:)/g) || [];
+  const c = items[0] || ':turbodaaamn:'; // the character to write with
+  const w = items[1] || ':blank:'; // the "whitespace"
   const responseText = `
-    ${replacement}:turbodaaamn::turbodaaamn:${replacement}${replacement}${replacement}:turbodaaamn:${replacement}${replacement}${replacement}:turbodaaamn::turbodaaamn::turbodaaamn:${replacement}${replacement}:turbodaaamn:${replacement}${replacement}:turbodaaamn:${replacement}
-${replacement}:turbodaaamn:${replacement}:turbodaaamn:${replacement}:turbodaaamn:${replacement}:turbodaaamn:${replacement}:turbodaaamn:${replacement}:turbodaaamn:${replacement}:turbodaaamn:${replacement}:turbodaaamn::turbodaaamn:${replacement}:turbodaaamn:${replacement}
-${replacement}:turbodaaamn:${replacement}:turbodaaamn:${replacement}:turbodaaamn::turbodaaamn::turbodaaamn:${replacement}:turbodaaamn:${replacement}:turbodaaamn:${replacement}:turbodaaamn:${replacement}:turbodaaamn:${replacement}:turbodaaamn::turbodaaamn:${replacement}
-${replacement}:turbodaaamn::turbodaaamn:${replacement}${replacement}:turbodaaamn:${replacement}:turbodaaamn:${replacement}:turbodaaamn:${replacement}${replacement}${replacement}:turbodaaamn:${replacement}:turbodaaamn:${replacement}${replacement}:turbodaaamn:${replacement}
+${w}${c}${c}${w}${w}${w}${c}${w}${w}${w}${c}${c}${c}${w}${w}${c}${w}${w}${c}${w}
+${w}${c}${w}${c}${w}${c}${w}${c}${w}${c}${w}${c}${w}${c}${w}${c}${c}${w}${c}${w}
+${w}${c}${w}${c}${w}${c}${c}${c}${w}${c}${w}${c}${w}${c}${w}${c}${w}${c}${c}${w}
+${w}${c}${c}${w}${w}${c}${w}${c}${w}${c}${w}${w}${w}${c}${w}${c}${w}${w}${c}${w}
   `;
   
   // const response = {
