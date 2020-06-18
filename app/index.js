@@ -40,6 +40,7 @@ app.post('/', (req, res) => {
 
   const response = {
     response_type: "in_channel",
+    as_user: true,
     text: responseText,
   };
 
