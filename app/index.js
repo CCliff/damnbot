@@ -18,7 +18,8 @@ app.use(bodyParser.json())
 
 app.post('/', (req, res) => {
   console.log(JSON.stringify(req.body));
-  res.send('Hello World!');
+  response = `:turbodaaamn:`;
+  res.send(response);
 });
 
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`));
