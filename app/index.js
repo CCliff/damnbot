@@ -1,8 +1,13 @@
 const express = require('express');
 const bodyParser = require('body-parser')
 
+const font = require('./fonts/5byN.js');
+const FontParser = require('./FontParser.js');
+
 const app = express();
 const port = process.env.PORT || 3000;
+
+const fontParser = new FontParser({font});
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -11,16 +16,14 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 app.post('/', (req, res) => {
-  const items = req.body.text.match(/(:.+?:)/g) || [];
-  const c = items[0] || ':turbodaaamn:'; // the character to write with
-  const w = items[1] || ':blank:'; // the "whitespace"
-  const responseText = `
-${w}${c}${c}${w}${w}${w}${c}${w}${w}${w}${c}${c}${c}${w}${w}${c}${w}${w}${c}${w}
-${w}${c}${w}${c}${w}${c}${w}${c}${w}${c}${w}${c}${w}${c}${w}${c}${c}${w}${c}${w}
-${w}${c}${w}${c}${w}${c}${c}${c}${w}${c}${w}${c}${w}${c}${w}${c}${w}${c}${c}${w}
-${w}${c}${c}${w}${w}${c}${w}${c}${w}${c}${w}${w}${w}${c}${w}${c}${w}${w}${c}${w}
-  `;
-  
+  const emojiMatch = req.body.text.match(/(:.+?:)/g) || [];
+  const c = emojiMatch[0] || ':turbodaaamn:'; // the character to write with
+  const w = emojiMatch[1] || ':blank:'; // the "whitespace"
+  const textMatch = req.body.text.match(/(?<!:[a-z0-9]*)[a-z0-9]+(?![a-z0-9]*:)/g) || [];
+  const text = textMatch[0] || 'damn';
+
+  const responseText = fontParser.parse(text, c, w);
+
   // const response = {
   //   "token":"5fIuiNjxlyVukYEteEvhsmDR",
   //   "team_id":"T03EPHHTC",
