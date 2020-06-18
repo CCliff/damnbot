@@ -12,6 +12,8 @@ class FontParser {
     const encoded = textArr.map(this._encodeLetter.bind(this));
     const joined = this._join(encoded);
     const interpolated = this._interpolate(joined, charEmoji, whitespaceEmoji);
+
+    return interpolated;
   }
 
   _encodeLetter (letter) {
