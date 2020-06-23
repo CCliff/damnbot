@@ -19,7 +19,7 @@ app.post('/', (req, res) => {
   const emojiMatch = req.body.text.match(/(:.+?:)/g) || [];
   const c = emojiMatch[0] || ':turbodaaamn:'; // the character to write with
   const w = emojiMatch[1] || ':blank:'; // the "whitespace"
-  const textMatch = req.body.text.match(/(?<!:[a-z0-9]*)[a-z0-9]+(?![a-z0-9]*:)/g) || [];
+  const textMatch = req.body.text.match(/(?<!:[a-z0-9]*)[a-z0-9]+(?![a-z0-9]*:)/gi) || [];
   const text = textMatch[0] || 'damn';
 
   const responseText = fontParser.parse(text, c, w);
