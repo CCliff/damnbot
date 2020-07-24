@@ -1,5 +1,6 @@
 const express = require('express');
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
+const util = require('util');
 
 const font = require('./fonts/5byN.js');
 const FontParser = require('./FontParser.js');
@@ -10,16 +11,19 @@ const port = process.env.PORT || 3000;
 const fontParser = new FontParser({font});
 
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // parse application/json
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 
 app.post('/', (req, res) => {
-  const emojiMatch = req.body.text.match(/(:.+?:)/g) || [];
+  const debug = /\!debug$/g.test(req.body.text); // log debug info to console by sending "/damn !debug"
+  const userMessage = req.body.text.replace('!debug', '');
+
+  const emojiMatch = userMessage.match(/(:.+?:)/g) || [];
   const c = emojiMatch[0] || ':turbodaaamn:'; // the character to write with
   const w = emojiMatch[1] || ':blank:'; // the "whitespace"
-  const textMatch = req.body.text.match(/(?<!:[a-z0-9]*)[a-z0-9]+(?![a-z0-9]*:)/gi) || [];
+  const textMatch = userMessage.match(/(?<!:[a-z0-9]*)[a-z0-9]+(?![a-z0-9]*:)/gi) || [];
   const text = textMatch[0] || 'damn';
 
   const responseText = fontParser.parse(text, c, w);
@@ -38,8 +42,16 @@ app.post('/', (req, res) => {
   //   "trigger_id":"1193170848019.3499595930.e8daf2d6da28bc96c517873585f11761"
   // }
 
+  if (debug) {
+    console.log('DEBUG: req.body:\n' + util.inspect(req.body, {compact: false}));
+    console.log('DEBUG: emojiMatch[0]: ' + emojiMatch[0]);
+    console.log('DEBUG: emojiMatch[1]: ' + emojiMatch[1]);
+    console.log('DEBUG: textMatch[0]:  ' + textMatch[0]);
+    // console.log('DEBUG: responseText:\n' + responseText);
+  }
+
   const response = {
-    response_type: "in_channel",
+    response_type: debug ? 'ephemeral' : 'in_channel',
     as_user: true,
     text: responseText,
   };
